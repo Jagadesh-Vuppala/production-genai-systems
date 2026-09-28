@@ -1,0 +1,21 @@
+﻿# Environment variables (CRITICAL: NEVER COMMIT KEYS)
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.pytest_cache/
+
+# OS specific
+Thumbs.db
+Desktop.ini
+.DS_Store
