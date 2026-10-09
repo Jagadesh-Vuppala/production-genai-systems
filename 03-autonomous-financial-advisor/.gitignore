@@ -1,5 +1,3 @@
 .env
 __pycache__/
 *.pyc
-WEALTH_BLUEPRINT_*.md
-!sample_blueprint.md
