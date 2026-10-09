@@ -12,7 +12,7 @@ Developed and maintained by **[Jagadesh Vuppala](https://github.com/Jagadesh-Vup
 | :--- | :--- | :--- | :--- |
 | **[01-Smart-QA-Bot](./01-smart-qa-bot)** | Multi-Provider Resilient Q&A Engine | LangChain, LangSmith, Pydantic v2, GPT-4o-mini, Claude-3-Haiku | Zero-downtime failover, typed structured contracts, full telemetry |
 | **[02-AI-Research-Assistant](./02-ai-research-assistant)** | Two-Tier Advanced RAG with Multi-Query & Compression | LangChain, ChromaDB, SQLite, Pydantic v2, GPT-6-Astra, GPT-5.4-mini | High-recall Multi-Query, noise-filtering contextual compression, anti-hallucination contract, persistent SQLite session memory |
-| **03-Multi-Agent-Workflows** *(Upcoming)* | Hierarchical Agent Teams with Supervision | LangGraph, Tool Calling, State Checkpointing | Human-in-the-loop, cyclical graph loops |
+| **[03-Autonomous-Financial-Advisor](./03-autonomous-financial-advisor)** | Hierarchical Agent Teams with Supervision | LangGraph, Tool Calling, State Checkpointing | Human-in-the-loop, cyclical graph loops |
 
 ---
 
