@@ -1,84 +1,102 @@
-﻿# Production GenAI Systems: Architecture & Implementation Suite
+# Production GenAI Systems: Architecture & Implementation Suite
 
-An enterprise-grade repository showcasing robust, production-tested Generative AI architectures, multi-provider resiliency patterns, structured data extraction, and deep observability.
+An enterprise-grade repository showcasing robust, production-tested Generative AI architectures, multi-provider resiliency patterns, two-tier advanced RAG systems, and autonomous multi-agent stateful graph workflows.
 
 Developed and maintained by **[Jagadesh Vuppala](https://github.com/Jagadesh-Vuppala)**.
 
 ---
 
-## 🏛️ Systems Portfolio Overview
+## ??? Systems Portfolio Overview
 
 | System | Architecture Pattern | Key Tech Stack | Production Highlights |
 | :--- | :--- | :--- | :--- |
-| **[01-Smart-QA-Bot](./01-smart-qa-bot)** | Multi-Provider Resilient Q&A Engine | LangChain, LangSmith, Pydantic v2, GPT-4o-mini, Claude-3-Haiku | Zero-downtime failover, typed structured contracts, full telemetry |
-| **[02-AI-Research-Assistant](./02-ai-research-assistant)** | Two-Tier Advanced RAG with Multi-Query & Compression | LangChain, ChromaDB, SQLite, Pydantic v2, GPT-6-Astra, GPT-5.4-mini | High-recall Multi-Query, noise-filtering contextual compression, anti-hallucination contract, persistent SQLite session memory |
-| **[03-Autonomous-Financial-Advisor](./03-autonomous-financial-advisor)** | Hierarchical Agent Teams with Supervision | LangGraph, Tool Calling, State Checkpointing | Human-in-the-loop, cyclical graph loops |
+| **[01-Smart-QA-Bot](./01-smart-qa-bot)** | Multi-Provider Resilient Q&A Engine | LangChain, LangSmith, Pydantic v2, GPT-4o-mini, Claude-3-Haiku | Zero-downtime cross-cloud failover, typed structured contracts, full latency & token telemetry |
+| **[02-AI-Research-Assistant](./02-ai-research-assistant)** | Two-Tier Advanced RAG with Compression | LangChain, ChromaDB, SQLite, Pydantic v2, GPT-6-Astra, GPT-5.4-mini | High-recall Multi-Query, noise-filtering contextual compression, anti-hallucination contract, persistent SQLite session memory |
+| **[03-Autonomous-Financial-Advisor](./03-autonomous-financial-advisor)** | Autonomous Multi-Agent CFP Wealth System | LangGraph, Pydantic v2, DuckDuckGo Live Search, GPT-6-Astra, GPT-5.4-mini | Symmetric 1-hop fan-out/fan-in, self-healing dynamic guardrails, deterministic cashflow balancing, closed-loop QC audit loop |
 
 ---
 
-## 🚀 Deep-Dive: System 01 - Smart Q&A Bot
+## ?? Architectural Deep-Dives
 
+### System 01: Smart Q&A Bot (Resilient Multi-Provider Engine)
 A mission-critical question-answering service engineered to prevent common LLM production failures (provider downtime, unparseable responses, untracked costs).
 
-### 🔍 Architecture Flow
-
-```
-[ User Input / CLI / API ]
-            │
-            ▼
-[ ChatPromptTemplate ] ──► System Instructions + Dynamic MessagesPlaceholder (Chat History)
-            │ (LCEL `|` Pipe)
-            ▼
-[ Resilient Model Engine ]
-   ├── Primary  : OpenAI (gpt-4o-mini)
-   └── Fallback : Anthropic (claude-3-haiku) via .with_fallbacks()
-            │
-            ▼
-[ Pydantic v2 Schema Contract ] ──► QAResponse(answer, confidence, reasoning, follow_up_questions, sources_needed)
-            │
-            ├──► [ Graceful Safety Shield ]: Catches exceptions without crashing, returns typed degraded state
-            └──► [ LangSmith Telemetry ]: Traces latency (ms), token consumption, and root-cause analysis
-```
-
-### ⚡ Key Architectural Patterns Implemented
-
-1. **Multi-Provider Failover:**
-   Configured cross-cloud redundancy (`OpenAI` ➔ `Anthropic`). If OpenAI experiences rate-limits (HTTP 429) or service outages (HTTP 500/503), the engine automatically reroutes the request to Claude without dropping the request.
-
-2. **Strict Typed Contracts (Pydantic v2):**
-   Eliminates unstructured text parsing issues by guaranteeing typed objects with strict validation constraints (`ge=0.0, le=1.0`).
-
-3. **Enterprise Observability (LangSmith):**
-   Integrated telemetry via `@traceable` decorators and runtime hooks to record latency trees, token usage (input vs. output breakdown), and pricing telemetry.
-
-4. **Conversational State Retention:**
-   Employs `MessagesPlaceholder` for clean multi-turn state injection while keeping core templates immutable.
+`	ext
+[ User Input ] --? [ ChatPromptTemplate ] --? [ Resilient Model Engine ]
+                                                +-- Primary  : OpenAI (gpt-4o-mini)
+                                                +-- Fallback : Anthropic (claude-3-haiku)
+                                                           �
+                                                           ?
+                                              [ Pydantic v2 Typed Contract ]
+                                              (Strict validation, graceful shields, LangSmith tracing)
+`
+- **Cross-Cloud Zero Downtime**: Automated failover from OpenAI to Anthropic during HTTP 429 rate-limits or 5xx outages via .with_fallbacks().
+- **Strict Typed Validation**: Guarantees typed Pydantic v2 output objects with validation constraints (ge=0.0, le=1.0).
+- **Telemetry & Traceability**: Full LangSmith observability tracking latency trees, token consumption, and cost telemetry.
 
 ---
 
-## 🛠️ Quickstart & Local Setup
+### System 02: AI Research Assistant (Two-Tier Production RAG)
+An academic & technical research engine solving semantic search limitations through intelligent query expansion, token noise filtering, and persistent state.
 
-Ensure you have [uv](https://github.com/astral-sh/uv) installed:
-
-```bash
-# Clone the repository
-git clone https://github.com/Jagadesh-Vuppala/production-genai-systems.git
-cd production-genai-systems/01-smart-qa-bot
-
-# Configure environment variables
-cp .env.example .env
-# Add your OPENAI_API_KEY, ANTHROPIC_API_KEY, and LANGCHAIN_API_KEY to .env
-
-# Install dependencies and sync virtualenv
-uv sync
-
-# Run the interactive CLI bot
-uv run python smart_bot_section_1.py
-```
+`	ext
+[ Research Query ] --? [ Tier 1: Multi-Query Expander ] --? [ Chroma Vector Store ]
+                                                                      �
+                                                                      ?
+[ Tier 2: Frontier Thinker ] ?-- [ SQLite Memory Vault ] ?-- [ Tier 1: Contextual Compressor ]
+  (gpt-6-astra synthesis)         (Persistent sessions)          (Strips 80% fluff/noise)
+`
+- **High-Recall Multi-Query Expansion**: Generates 3 academic query reformulations to bridge lexical vocabulary gaps.
+- **Contextual Token Compression**: Uses high-speed Tier 1 LLM to strip 80% irrelevant fluff, feeding only pure formulas and verified facts to the synthesis model.
+- **Persistent SQLite Vault**: Multi-turn conversation retention across restarts via SQLChatMessageHistory.
 
 ---
 
-## 👤 Author
+### System 03: Autonomous Financial Advisor (CFP Multi-Agent System)
+A Certified Financial Planner (CFP) grade autonomous committee orchestrating live web research, deterministic cashflow math, and self-correcting compliance auditing.
+
+`	ext
+[ START ] --? [ Supervisor Node ] --? [ Insurance Specialist ]
+                                                �
+                       +-------------------------------------------------+
+                       ? (Symmetric Fan-Out)                             ? (Symmetric Fan-Out)
+             [ Investment Specialist ]                         [ Tax Specialist ]
+             (Multi-Asset Allocation)                          (2026 Slab & 87A Optimization)
+                       �                                                 �
+                       +-------------------------------------------------+
+                                                ? (Symmetric Fan-In)
+                                       [ Synthesizer Node ]
+                                                �
+                                                ?
+                                       [ QC Auditor Node ] --? (Score >= 7) --? [ Approved Blueprint ]
+                                                �
+                                                +--? (Score < 7) --? Rejection Loop back to Supervisor
+`
+- **Symmetric 1-Hop Fan-Out / Fan-In**: Eliminates asynchronous superstep race conditions (InvalidUpdateError) by enforcing uniform hop distances between concurrent specialists.
+- **Autonomous Cover Sizing & Live Pricing**: Derives term and health coverage dynamically from salary (10x�15x rule) and budget constraints via live web search.
+- **Self-Healing Guardrails**: Code-level self-healing ensures non-zero premiums and deterministic accounting: Needs + Wants + Debt + Insurance + Investments == Total Salary.
+- **Closed-Loop Audit Gate**: Evaluates plan compliance and enforces iterative refinement if mathematical balance or policy clarity fails.
+
+---
+
+## ??? Repository Navigation & Quickstart
+
+Each system is completely self-contained with dedicated code, dependencies, and documentation:
+
+`ash
+# System 01: Smart Q&A Bot
+cd 01-smart-qa-bot && pip install -r requirements.txt && python smart_bot_section_1.py
+
+# System 02: AI Research Assistant
+cd 02-ai-research-assistant && pip install -r requirements.txt && python app.py
+
+# System 03: Autonomous Financial Advisor
+cd 03-autonomous-financial-advisor && pip install -r requirements.txt && python main.py
+`
+
+---
+
+## ????? Author & Maintainer
 **Jagadesh Vuppala**  
 *Senior Generative AI & LLM Systems Engineer*  
 *GitHub:* [@Jagadesh-Vuppala](https://github.com/Jagadesh-Vuppala)
